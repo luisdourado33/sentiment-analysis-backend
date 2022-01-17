@@ -12,3 +12,6 @@ class SignUpProps(BaseModel):
   lastName: str
   email: str
   password: str
+
+class SignOutProps(BaseModel):
+  id: str

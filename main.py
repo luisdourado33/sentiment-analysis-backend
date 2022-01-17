@@ -1,37 +1,51 @@
+# Sentiment Analysis - API
+#
+# This is the main file, where
+# API is started with uvicorn package.
+# To start: uvicorn main:app --reload
+#
+# Created by: Luís Dourado (luisdourado33)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database.main import firebase
-
-# Controllers
-from controllers.auth import get_all, signin
-from controllers.auth import signup
 
 # Types
-from application_types.auth import LoginProps
-from application_types.auth import SignUpProps
+from app_types.main import LoginProps, SignUpProps
+
+# Controllers
+from controllers.auth.main import signin, signup
+from controllers.tweepy.main import get_by_keyword
 
 app = FastAPI()
-app.add_middleware(
-  CORSMiddleware,
-  allow_origins=['*'],
-  allow_credentials=True,
-  allow_methods=["*"],
-  allow_headers=["*"]
-)
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["*"],
+                   allow_credentials=True,
+                   allow_methods=["*"],
+                   allow_headers=["*"])
+
+
+# Routes for authentication
 @app.get("/")
-async def root():
-  return { "status": 200, "message": "API is running and its documentation is available on /docs" }
+def index():
+    return {"status": 200, "message": "API is online. Docs in /docs"}
 
-@app.post("/login")
-async def handleLogin(login_data: LoginProps):
-  response = await signin(login_data)
+
+# Login route
+@app.post("/auth/login")
+async def make_login(login_data: LoginProps):
+    response = await signin(login_data)
+    return response
+
+
+# SignUp route
+@app.post("/auth/signup")
+async def create_account(signup_data: SignUpProps):
+    response = await signup(signup_data)
+    return response
+
+
+# Tweepy routes
+@app.get("/tweepy/get_tweets/{keyword}")
+async def get_tweets_by_keyword(keyword: str):
+  response = await get_by_keyword(keyword)
   return response
-
-@app.post("/signup")
-async def handleSignUp(signup_data: SignUpProps):
-  response = await signup(signup_data)
-  return response
-
-@app.get("/getAll")
-def handleGetAll():
-  return get_all()
