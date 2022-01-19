@@ -7,7 +7,10 @@
 # Created by: Luís Dourado (luisdourado33)
 
 from fastapi import FastAPI
+from dotenv import dotenv_values
 from fastapi.middleware.cors import CORSMiddleware
+
+config = dotenv_values(".env")
 
 # Types
 from app_types.main import LoginProps, SignUpProps

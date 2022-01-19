@@ -1,11 +1,13 @@
+from dotenv import dotenv_values
 import pyrebase
 
+environment = dotenv_values(".env")
+
 config = {
-    "apiKey": "AIzaSyD0liM23zMk_HgnZicjO2uHbvsNmmKx3H8",
-    "authDomain": "sentimentanalysis-9bdac.firebaseapp.com",
-    "databaseURL":
-    "https://sentimentanalysis-9bdac-default-rtdb.firebaseio.com",
-    "storageBucket": "sentimentanalysis-9bdac.appspot.com"
+    "apiKey": environment['FIREBASE_API_KEY'],
+    "authDomain": environment['FIREBASE_AUTH_DOMAIN'],
+    "databaseURL": environment['FIREBASE_DATABASE_URL'],
+    "storageBucket": environment['FIREBASE_STORAGE_BUCKET']
 }
 
 firebase = pyrebase.initialize_app(config)
