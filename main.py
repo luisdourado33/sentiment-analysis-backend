@@ -18,6 +18,7 @@ from app_types.main import LoginProps, SignUpProps
 # Controllers
 from controllers.auth.main import signin, signup
 from controllers.tweepy.main import get_by_keyword
+from controllers.spacy.main import get_spacy_ex
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware,
@@ -52,3 +53,10 @@ async def create_account(signup_data: SignUpProps):
 async def get_tweets_by_keyword(keyword: str):
   response = await get_by_keyword(keyword)
   return response
+
+
+# spaCy
+@app.get("/spacy/example")
+def get_spacy_example():
+    response = get_spacy_ex()
+    return response
