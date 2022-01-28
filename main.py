@@ -13,11 +13,11 @@ from fastapi.middleware.cors import CORSMiddleware
 config = dotenv_values(".env")
 
 # Types
-from app_types.main import LoginProps, SignUpProps
+from app_types.main import LoginProps, SignUpProps, PostNewVoteProps
 
 # Controllers
 from controllers.auth.main import signin, signup
-from controllers.tweepy.main import get_by_keyword
+from controllers.tweepy.main import get_by_keyword, get_tweets_pre, populate, post_vote_new
 from controllers.spacy.main import get_spacy_ex
 
 app = FastAPI()
@@ -54,6 +54,22 @@ async def get_tweets_by_keyword(keyword: str):
   response = await get_by_keyword(keyword)
   return response
 
+@app.post("/tweepy/populate/{keyword}")
+async def populate_database_by_keyword(keyword: str):
+  response = await populate(keyword)
+  return response
+
+@app.get("/tweepy/pre_tweets")
+async def get_pre_tweets():
+    response = await get_tweets_pre()
+    return response
+
+
+
+@app.post("/tweepy/post_tweets/new")
+async def post_new_vote(vote_data: PostNewVoteProps):
+    response = await post_vote_new(vote_data)
+    return response
 
 # spaCy
 @app.get("/spacy/example")

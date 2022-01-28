@@ -15,3 +15,8 @@ class SignUpProps(BaseModel):
 
 class SignOutProps(BaseModel):
   id: str
+
+class PostNewVoteProps(BaseModel):
+  id: str
+  tweet_text: str
+  sentiment: int
