@@ -15,7 +15,7 @@ def get_spacy_ex():
       "is_stop": token.is_stop
     })
 
-    if token.is_stop is False and token.pos_ is not "PUNCT":
+    if token.is_stop is False and token.pos_ != "PUNCT":
       text_treatment = text_treatment + " " + token.text
 
 

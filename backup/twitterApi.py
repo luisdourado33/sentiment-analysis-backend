@@ -18,7 +18,7 @@ def search():
                                                  tweet_mode="extended")
             tweet_text = tweet.full_text
 
-            if full_status is not None:
+            if full_status != None:
                 if full_status.retweeted is True:
                     tweet_text = full_status.retweeted_status.full_text
                 else:

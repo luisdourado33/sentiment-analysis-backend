@@ -5,16 +5,16 @@ from app_types.main import LoginProps, SignUpProps
 
 async def signin(login_data: LoginProps):
     try:
+        print(login_data)
         auth = firebase.auth()
         db = firebase.database()
 
         authentication = auth.sign_in_with_email_and_password(
             login_data.email, login_data.password)
 
-        user_data = db.child("users").order_by_child("local_id").equal_to(
-            authentication["localId"]).get()[0].item[1]
+        user_data = db.child("users").order_by_child("local_id").equal_to(authentication["localId"]).get()[0].item[1]
 
-        if user_data is not None:
+        if user_data != None:
             user = {
                 "local_id": authentication["localId"],
                 "firstName": user_data["firstName"],
@@ -35,10 +35,10 @@ async def signup(signup_data: SignUpProps):
         new_account = auth.create_user_with_email_and_password(
             signup_data.email, signup_data.password)
 
-        if new_account is not None:
+        if new_account != None:
             new_user = {
-                "local_id": new_account['localId'],
-                "email": new_account['email'],
+                "local_id": new_account["localId"],
+                "email": new_account["email"],
                 "firstName": signup_data.firstName,
                 "lastName": signup_data.lastName,
             }

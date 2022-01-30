@@ -55,7 +55,7 @@ async def signin(login_data: LoginProps):
       user_data = db.child("users").order_by_child("local_id").equal_to(
           authentication["localId"]).get()[0].item[1]
 
-      if (user_data is not None):
+      if (user_data != None):
           user = {
               "local_id": authentication["localId"],
               "firstName": user_data["firstName"],

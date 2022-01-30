@@ -14,8 +14,8 @@ async def post_vote_new(vote_data: PostNewVoteProps):
       "sentiment": vote_data.sentiment
     }
 
-    print(item_to_save)
-    return item_to_save
+    db.child("pos_tweets").push(item_to_save)
+    return { "status": 200, "message": "Voto computado com sucesso." }
 
   except HTTPError as error:
     return { "status": 400, "message": "Houve um erro ao salvar a votação." }
@@ -31,7 +31,7 @@ async def get_by_keyword(keyword: str):
 
       full_text = tweet.full_text
 
-      if tweet_details is not None:
+      if tweet_details != None:
         if tweet_details.retweeted is True:
             full_text = tweet_details.retweeted_status.full_text
         else:
@@ -79,7 +79,7 @@ async def populate(keyword: str):
 
         full_text = tweet.full_text
 
-        if tweet_details is not None:
+        if tweet_details != None:
           if tweet_details.retweeted is True:
               full_text = tweet_details.retweeted_status.full_text
           else:

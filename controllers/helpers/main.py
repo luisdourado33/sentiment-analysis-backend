@@ -1,13 +1,6 @@
-from email.mime import base
 import spacy
 import string
-import random
 import re
-
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 def clear_text(text):
   # Nome do usuário @
